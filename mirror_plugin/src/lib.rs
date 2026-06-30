@@ -131,4 +131,49 @@ mod tests {
         assert!(!p.vertical);
         assert!(!p.horizontal);
     }
+
+    fn make_2x2() -> Vec<u8> {
+        vec![
+            10, 20,  30,  255,
+            40, 50,  60,  255,
+            70, 80,  90,  255,
+           100, 110, 120, 255,
+        ]
+    }
+
+    #[test]
+    fn horizontal_flip_2x2() {
+        let mut buf = make_2x2();
+        rotate(&mut buf, 2, 2, parse_params("horizontal=true"));
+        assert_eq!(buf, vec![
+            40, 50,  60,  255,
+            10, 20,  30,  255,
+           100, 110, 120, 255,
+            70, 80,  90,  255,
+        ]);
+    }
+
+    #[test]
+    fn vertical_flip_2x2() {
+        let mut buf = make_2x2();
+        rotate(&mut buf, 2, 2, parse_params("vertical=true"));
+        assert_eq!(buf, vec![
+            70, 80,  90,  255, // (0,0) ← BL
+           100, 110, 120, 255, // (1,0) ← BR
+            10, 20,  30,  255, // (0,1) ← TL
+            40, 50,  60,  255, // (1,1) ← TR
+        ]);
+    }
+
+    #[test]
+    fn both_flips_2x2() {
+        let mut buf = make_2x2();
+        rotate(&mut buf, 2, 2, parse_params("vertical=true,horizontal=true"));
+        assert_eq!(buf, vec![
+           100, 110, 120, 255,
+            70, 80,  90,  255,
+            40, 50,  60,  255,
+            10, 20,  30,  255,
+        ]);
+    }
 }

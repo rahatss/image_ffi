@@ -119,4 +119,32 @@ mod tests {
         blur(&mut buf, width, height, BlurParams { sigma: 1.0 });
         assert_eq!(buf.len(), (width * height * 4) as usize);
     }
+
+    #[test]
+    fn blur_uniform_buffer_unchanged() {
+        let width = 4u32;
+        let height = 4u32;
+        let uniform = vec![128u8; (width * height * 4) as usize];
+        let mut buf = uniform.clone();
+        blur(&mut buf, width, height, BlurParams { sigma: 1.5 });
+        assert_eq!(buf, uniform);
+    }
+
+    #[test]
+    fn blur_bright_center_diffuses_to_neighbors() {
+        // одиночный белый пиксель в центре 3×3, остальные чёрные
+        let width = 3u32;
+        let height = 3u32;
+        let mut buf = vec![0u8; (width * height * 4) as usize];
+        let center = (1 * width + 1) as usize * 4;
+        buf[center]     = 255; // R
+        buf[center + 1] = 255; // G
+        buf[center + 2] = 255; // B
+        buf[center + 3] = 255; // A
+
+        blur(&mut buf, width, height, BlurParams { sigma: 1.0 });
+
+        // центр стал темнее цвет размазался
+        assert!(buf[center] < 255);
+    }
 }
