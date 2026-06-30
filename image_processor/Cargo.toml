@@ -1,0 +1,9 @@
+[package]
+name = "image_processor"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+image = { workspace = true }
+clap = { version = "4.5.47", features = ["derive"]}
+libloading = "0.8.8"

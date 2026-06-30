@@ -1,0 +1,10 @@
+[workspace]
+members = [
+    "image_processor",
+    "blur_plugin",
+    "mirror_plugin"
+]
+
+
+[workspace.dependencies]
+image = "0.25.8"
