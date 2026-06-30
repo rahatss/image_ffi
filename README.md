@@ -17,7 +17,7 @@ image_converter/
 ├── blur_plugin/            # cdylib: размытие
 ├── params/
 │   ├── mirror.txt          # horizontal=true,vertical=false
-│   └── blur.txt            # radius=4,iterations=3
+│   └── blur.txt            # sigma=5
 └── input.png               # Тестовое изображение
 ```
 
@@ -60,7 +60,7 @@ cargo test --workspace
 | `mirror` | `vertical={true or false},horizontal={true or false}` | Зеркальный разворот изображения |
 | `blur`   | `sigma=N`                                             | Blur изображения                | 
 
-Формат файла параметров — `ключ=значение` через запятую, например:
+Формат файла параметров `ключ=значение` через запятую, например:
 ```
 vertical=true,horizontal=true
 ```
